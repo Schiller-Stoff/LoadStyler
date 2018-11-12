@@ -3,11 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const path = require('path');
 module.exports = {
   entry: {
-      pageOne: './src/pageone/index.js',
-      pageTwo: './src/pagetwo/index.js',
-      pageThree:'./src/pagethree/index.js',
-      pageFour:'./src/pagefour/index.js',
-      pageFive:'./src/pagefive/index.js'
+      pageOne: './src/pageone/index.js'
         },
   output: {
     path: path.resolve(__dirname, 'dist/js'),
