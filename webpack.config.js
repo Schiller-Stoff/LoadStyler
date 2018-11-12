@@ -7,7 +7,7 @@ module.exports = {
         },
   output: {
     path: path.resolve(__dirname, 'dist/js'),
-    filename: '[name].js'
+    filename: 'LoadStyler.js'
   },
   module: {
 
@@ -23,6 +23,6 @@ module.exports = {
     ]
   },
     plugins: [
-        new ExtractTextPlugin({filename: '../css/[name].css'}),
+        new ExtractTextPlugin({filename: '../css/LoadStyler.css'}),
     ]
 };
