@@ -8,7 +8,7 @@ import "bootstrap";
 
 //----- Example Export ----
 export default
-class PageOne{
+class LoadStyler{
 
   constructor(){
   }

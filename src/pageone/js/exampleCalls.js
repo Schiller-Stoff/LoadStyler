@@ -1,9 +1,9 @@
 // class import
-import PageOne from "./pageOne";
+import LoadStyler from "./LoadStyler";
 
 
 // Tests from here!
-const EditionUI = new PageOne();
-EditionUI.testMe();
+const LoadStylerTest = new LoadStyler();
+LoadStylerTest.testMe();
 
 
