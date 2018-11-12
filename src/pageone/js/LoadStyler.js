@@ -1,7 +1,7 @@
 
 // ------ example Imports -------
 //jquery
-import $ from 'jquery';
+//import $ from 'jquery';
 
 
 //----- Example Export ----
