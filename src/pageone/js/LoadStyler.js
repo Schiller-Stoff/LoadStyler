@@ -2,8 +2,6 @@
 // ------ example Imports -------
 //jquery
 import $ from 'jquery';
-//bootstrap
-import "bootstrap";
 
 
 //----- Example Export ----
