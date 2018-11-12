@@ -1,0 +1,27 @@
+
+// SCSS imports here!
+
+
+//**************************************
+// ----- Bootstrap-Handling ---------- //
+
+// first setting custom Variables
+@import "bootstrap_customVariables/custom";
+
+// then importing whole bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+// it is possible/better to only import parts of
+// bootstrap! See doc!
+
+//                                    //
+//************************************//
+
+
+
+
+//************************************//
+// Custom CSS here
+
+// import of later overwriting CSS!
+@import "example_import/body";
