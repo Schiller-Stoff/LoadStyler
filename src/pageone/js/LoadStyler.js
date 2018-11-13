@@ -87,7 +87,7 @@ class LoadStyler{
         // blends it in, in the centre of page
         // will style all ajax loads -- with the same style,
 
-        let self = this; //jQuery "this"-saver                              //TODO error-handling
+        let self = this; //jQuery "this"-saver
 
         $(document).ajaxStart(function(evt) {
             console.debug("LoadStyler: Ajax start detected...");
@@ -112,7 +112,7 @@ class LoadStyler{
         // the relative position of the ajaxLoader is handled by the CSS.
 
         //Debug Info
-        console.info("\n\n------ styleAjaxLoads()-----");                       //TODO implement error handling!
+        console.info("\n\n------ styleAjaxLoads()-----");
         console.info('The given parameter is:');
         console.info(objectArray);
         //
