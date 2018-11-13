@@ -87,7 +87,7 @@ class LoadStyler{
         // blends it in, in the centre of page
         // will style all ajax loads -- with the same style,
 
-        let self = this; //jQuery "this"-saver
+        let self = this; //jQuery "this"-saver                              //TODO error-handling
 
         $(document).ajaxStart(function(evt) {
             console.debug("LoadStyler: Ajax start detected...");
@@ -112,10 +112,12 @@ class LoadStyler{
         // the relative position of the ajaxLoader is handled by the CSS.
 
         //Debug Info
-        console.info("\n\n------ styleAjaxLoads()-----");
+        console.info("\n\n------ styleAjaxLoads()-----");                       //TODO implement error handling!
         console.info('The given parameter is:');
         console.info(objectArray);
         //
+
+        //TODO first check user input
 
 
         let self = this;    //jquery saver
@@ -124,6 +126,7 @@ class LoadStyler{
         self._selectAjaxLoader();
 
 
+        //TODO forEach into error-handling!
         objectArray.forEach(function (obj) {
             // Error Handling
             if(obj.target.length===0)return console.log('There is no Element in your target selection: ' + obj.target);
@@ -196,7 +199,7 @@ class LoadStyler{
 
         // On load
         $(window).on('load', function() { // makes sure the whole site is loaded
-            self.preloader.delay(350).fadeOut('slow');
+            self.preloader.delay(350).fadeOut('slow');            //TODO make sure that it is fade out!
             $('body').delay(350).css({'overflow':'visible'});
         });
     }
@@ -227,7 +230,7 @@ class LoadStyler{
         self.blender.show();
 
         $(window).on('load', function() { // makes sure the whole site is loaded
-            self.blender.delay(350).fadeOut('slow');
+            self.blender.delay(350).fadeOut('slow');            //TODO need to test here if blender is really blend out! - same is true for the loader/spinner!
             $('body').delay(350).css({'overflow':'visible'});
         });
 
