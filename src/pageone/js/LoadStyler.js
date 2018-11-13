@@ -25,19 +25,6 @@ class LoadStyler{
         // select and remember selected pageLeave <a>
         this.pageLeaveLinks = this._retrievePageLinks(toStyleLinks);
 
-        // ajax Load Register - for handling load order
-        this.ajaxLoadRegister = [];
-
-        // order counter for ajax animations
-        this.ajax_orderCounter = 0;
-
-        // ajax - Url
-        this.ajax_url = undefined;
-
-        // AjaxOnscroll Stacks - needed for scrollHandleContent
-        //this._ajaxDownScrollStack = new Stack();
-        //this._ajaxUpScrollStack = new Stack();
-
     }
 
     applyLoaderTransition(){
@@ -392,18 +379,6 @@ class LoadStyler{
 
         }
 
-    }
-
-    _calcBorderBottomPosition(element){
-        // Calculates the position of the BottomBorder of the element.
-        // Uses the jquery Methods height() and offset() ---> the numbers work relative
-        // to the document.
-
-        let elementHeight = element.height();
-        let elementTopDistance = element.offset().top; //.offset returns an object with property lef and top
-        let elemBottomBorderPos = elementHeight + elementTopDistance;
-
-        return elemBottomBorderPos;
     }
 
     _retrievePageLinks(toStyleLinks){
