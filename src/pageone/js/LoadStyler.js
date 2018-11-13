@@ -3,9 +3,8 @@
 //jquery
 //import $ from 'jquery';
 
+// export at the end!!!
 
-//----- Example Export ----
-export default
 class LoadStyler{
 
     constructor(toStyleLinks){
@@ -470,3 +469,6 @@ class LoadStyler{
     }
 
 }
+
+//export for node
+module.exports = LoadStyler;
