@@ -31,8 +31,26 @@ class LoadStyler{
         //Loading of page (precash and preload) will be indicated by a loader;
         //no full stack page transition -- will only display the animated loader.
         //function calls _applyPreLoader() and _applyPreCashLoader()
-        this._applyPreLoader();
-        this._applyPreCashLoader();
+
+        try {
+          this._applyPreLoader();
+          this._applyPreCashLoader();
+
+
+        } catch (e) {
+          console.warn(
+            'LoaderTransition could not be applied.\nFollowing error was thrown inside the class: '
+          );
+          console.error(e);
+          try {
+            console.warn('The LoadStyler tries to suppress possible-added hardcoded/static html items now...');
+            $('#LoadStyler_Preloader').css('display','none');
+            $('#LoadStyler_PrecacheLoader').css('display','none');
+            console.warn('success!');
+          } catch (e) {
+            console.warn('Hiding the html hardcoded LoadStyler-Elements failed!')
+          }
+        }
     }
 
     applyPageTransition(){
@@ -407,7 +425,7 @@ class LoadStyler{
 
         if (toStyleLinks === undefined){
             try {
-              //console.log($('#testbutton01').attr('href').length);  //test error
+              console.log($('#testbutton01').attr('href').length);  //test error
               return this._filterPageLeaveLinks();
 
             //error handling from here
