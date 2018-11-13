@@ -117,38 +117,35 @@ class LoadStyler{
         console.info(objectArray);
         //
 
-        //TODO first check user input
-
-
         let self = this;    //jquery saver
 
-
-        self._selectAjaxLoader();
-
-
-        //TODO forEach into error-handling!
-        objectArray.forEach(function (obj) {
+        try {
+          self._selectAjaxLoader();
+          objectArray.forEach(function(obj) {
             // Error Handling
-            if(obj.target.length===0)return console.log('There is no Element in your target selection: ' + obj.target);
-            if(obj.source.length===0)return console.log('There is no Element in your source selection: ' + obj.source);
+            if (obj.target.length === 0) return console.log('There is no Element in your target selection: ' + obj.target);
+            if (obj.source.length === 0) return console.log('There is no Element in your source selection: ' + obj.source);
             //
 
-            obj.target.css({position:'relative'});                  // makes sure that the parent container of the element is set to relative!
+            obj.target.css({ position: 'relative' });                  // makes sure that the parent container of the element is set to relative!
 
 
             //obj.source = self._validateSelection(obj.source);       // this is necessary because of ajax --> jquery can't select a not existing elem, here it will select it if not already!
 
-            obj.source.click(function () {
+            obj.source.click(function() {
 
-                console.info('\n\nClick event test');
+              console.info('\n\nClick event test');
 
-                obj.target.append(self.ajaxloader);
-                self.ajaxloader.fadeIn();
+              obj.target.append(self.ajaxloader);
+              self.ajaxloader.fadeIn();
 
             });
-
-
-        });
+          });
+        } catch (e) {
+            console.warn('Something went wrong inside styleAjaxLoads. Ajax Style will not be applied. The error is: ');
+            console.error(e);
+            return;
+        }
 
         $(document).ajaxComplete(function () {
             console.debug("LoadStyler: Ajax stop detected...");
