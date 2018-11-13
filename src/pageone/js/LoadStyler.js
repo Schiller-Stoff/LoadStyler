@@ -425,7 +425,7 @@ class LoadStyler{
 
         if (toStyleLinks === undefined){
             try {
-              console.log($('#testbutton01').attr('href').length);  //test error
+              //console.log($('#testbutton01').attr('href').length);  //test error
               return this._filterPageLeaveLinks();
 
             //error handling from here
