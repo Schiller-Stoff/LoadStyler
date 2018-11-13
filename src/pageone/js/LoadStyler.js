@@ -40,9 +40,28 @@ class LoadStyler{
         // calls applyLoaderTransition (for the css animated loader)  and _applyLoadTransitionBlender
         // for the background-fading effect.
 
-        this.applyLoaderTransition();
-        this._applyLoadTransitionBlender();
+        try {
+          this.applyLoaderTransition();
+          this._applyLoadTransitionBlender();
 
+        //error-handling
+        } catch (e) {
+          console.warn(
+            'PageTransition could not be applied.\nFollowing error was thrown inside the class: '
+          );
+          console.error(e);
+          //hides the blender in case of error;
+          try {
+            console.warn('The LoadStyler tries to suppress possible-added hardcoded/static html items now...');
+            $('#LoadStyler_Blender').css('display','none');
+            $('#LoadStyler_Preloader').css('display','none');
+            $('#LoadStyler_PrecacheLoader').css('display','none');
+            console.warn('success!');
+          } catch (e) {
+            console.warn('Hiding the html hardcoded LoadStyler-Elements failed!')
+          }
+
+        }
     }
 
     styleAjaxLoadsSimple(){
@@ -382,18 +401,26 @@ class LoadStyler{
     }
 
     _retrievePageLinks(toStyleLinks){
-        //
-        //
-        //
+        // If links were given to the constructor this will just return these links. Otherwise
+        // it calls as custom operation the _filterPageLeaveLinks() method -- to filter intern links
+        // from these that lead to different domains / pages etc.
 
         if (toStyleLinks === undefined){
+            try {
+              //console.log($('#testbutton01').attr('href').length);  //test error
+              return this._filterPageLeaveLinks();
 
-            return this._filterPageLeaveLinks();
-
+            //error handling from here
+            } catch (e) {
+                console.warn(
+                  e.name +
+                  ': There was an error at the custom filtering for pageLeave links, instead returning an empty array --> will cause an error. ' +
+                  'No pagetransition on leave applied. Consider giving the specific links to the constructor.'
+                );
+                return [];
+            }
         } else {
-
             return toStyleLinks;
-
         }
 
 
