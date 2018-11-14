@@ -41,13 +41,50 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
       assert.equal(class_string, test_string);
     });
 
-    it('styleAjaxLoads: if array of objects is given.... ', function() {
+    describe('_retrievePageLinks', function() {
 
-    })
+      it('returns all links with no classes found on webpage', function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+
+        let links = $('a');
+
+        styler._retrievePageLinks();
+
+        let expectedLink_count = 3;
+        let actuaclLinksInVariable_count = links.length;
+
+        assert.equal(expectedLink_count,actuaclLinksInVariable_count);
+      });
+
+      it('if parameter is given it excatly returns that parameter (ignoring links on page)',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+
+        let actualTestString = styler._retrievePageLinks('Test');
+        let expectedString = 'Test';
+
+        assert.equal(actualTestString,expectedString);
+
+      });
+
+    });
 
   });
 
-  describe('jquery tests', function() {
+  describe('jquery dom manipulation tests', function() {
 
     describe('_selectPreloader',function() {
 
@@ -251,8 +288,113 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
-  });
+    describe('_filtePageLeaveLinks', function() {
 
+      it('filters out all a-tags with href smaller than 2',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="https://www.google.com"></a>'));
+        body.append($('<a href="#"></a>'));
+        body.append($('<a href="https://www.yahoo.com"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 2;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a tags with href that point to ids on the same site', function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="#perfect"></a>'));
+        body.append($('<a href="#niceTest"></a>'));
+        body.append($('<a href="https://www.yahoo.com"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a tags that have class "dropdown"',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a href="www.yahoo.com" class="dropdown"></a>'));
+        body.append($('<a href="www.facebook.com" class="dropdown"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a tags with class = "drppdown-toggle"',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a href="www.yahoo.com" class="dropdown-toggle"></a>'));
+        body.append($('<a href="www.facebook.com" class="dropdown-toggle"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a-tags without href attributes', function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('saves filtered links onto class variable', function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = styler.pageLeaveLinks.length;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+    });
+
+  });
 
 
 
@@ -261,6 +403,9 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
   });
 
   describe('Throws error as expected', function() {
+
+
+
 
   });
 
