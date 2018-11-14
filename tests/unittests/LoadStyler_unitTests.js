@@ -31,14 +31,18 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
   describe('Given Parameter leads to expected behaviour',function() {
 
-    it('this.pageLeaveLinks: Internal class variable has expected value from instantiation',function() {
+    describe('this.pageLeaveLinks',function() {
 
-      const styler = new LoadStyler([]);
+      it('this.pageLeaveLinks: Internal class variable has expected value from instantiation',function() {
 
-      let class_string = JSON.stringify(styler.pageLeaveLinks);
-      let test_string = '[]';
+        const styler = new LoadStyler([]);
 
-      assert.equal(class_string, test_string);
+        let class_string = JSON.stringify(styler.pageLeaveLinks);
+        let test_string = '[]';
+
+        assert.equal(class_string, test_string);
+      });
+
     });
 
     describe('_retrievePageLinks', function() {
@@ -77,6 +81,112 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
         let expectedString = 'Test';
 
         assert.equal(actualTestString,expectedString);
+
+      });
+
+    });
+
+    describe('_filterPageLeaveLinks', function() {
+
+      it('filters out all a-tags with href smaller than 2',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="https://www.google.com"></a>'));
+        body.append($('<a href="#"></a>'));
+        body.append($('<a href="https://www.yahoo.com"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 2;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a tags with href that point to ids on the same site', function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="#perfect"></a>'));
+        body.append($('<a href="#niceTest"></a>'));
+        body.append($('<a href="https://www.yahoo.com"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a tags that have class "dropdown"',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a href="www.yahoo.com" class="dropdown"></a>'));
+        body.append($('<a href="www.facebook.com" class="dropdown"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a tags with class = "drppdown-toggle"',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a href="www.yahoo.com" class="dropdown-toggle"></a>'));
+        body.append($('<a href="www.facebook.com" class="dropdown-toggle"></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('filters out all a-tags without href attributes', function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = 1;
+
+        assert.equal(filteredLink_count,expectedLink_count);
+
+      });
+
+      it('saves filtered links onto class variable', function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        body.append($('<a href="www.google.com"></a>'));
+        body.append($('<a></a>'));
+        body.append($('<a></a>'));
+
+        let filteredLink_count = styler._filterPageLeaveLinks().length;
+        let expectedLink_count = styler.pageLeaveLinks.length;
+
+        assert.equal(filteredLink_count,expectedLink_count);
 
       });
 
@@ -288,109 +398,54 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
-    describe('_filterPageLeaveLinks', function() {
+    describe('_applyLoadTransitionBlender',function() {
 
-      it('filters out all a-tags with href smaller than 2',function() {
-
-        let styler = new LoadStyler();
-
-        let body = $('body');
-
-        body.append($('<a href="https://www.google.com"></a>'));
-        body.append($('<a href="#"></a>'));
-        body.append($('<a href="https://www.yahoo.com"></a>'));
-
-        let filteredLink_count = styler._filterPageLeaveLinks().length;
-        let expectedLink_count = 2;
-
-        assert.equal(filteredLink_count,expectedLink_count);
-
-      });
-
-      it('filters out all a tags with href that point to ids on the same site', function() {
+      it('makes blender visible immediately after function call',function() {
 
         let styler = new LoadStyler();
 
-        let body = $('body');
+        styler._applyLoadTransitionBlender();
 
-        body.append($('<a href="#perfect"></a>'));
-        body.append($('<a href="#niceTest"></a>'));
-        body.append($('<a href="https://www.yahoo.com"></a>'));
+        let display_value = styler.blender.css('display');
+        let expected_displayValue = 'block';
 
-        let filteredLink_count = styler._filterPageLeaveLinks().length;
-        let expectedLink_count = 1;
-
-        assert.equal(filteredLink_count,expectedLink_count);
+        assert.equal(display_value, expected_displayValue);
 
       });
 
-      it('filters out all a tags that have class "dropdown"',function() {
+      it('hides the blender after a second (after pageLoad event)',async function() {
 
         let styler = new LoadStyler();
 
-        let body = $('body');
+        //creating small awaitable function
+        async function wait(ms) {
+          return new Promise(resolve => {
+            setTimeout(resolve, ms);
+          });
+        }
 
-        body.append($('<a href="www.google.com"></a>'));
-        body.append($('<a href="www.yahoo.com" class="dropdown"></a>'));
-        body.append($('<a href="www.facebook.com" class="dropdown"></a>'));
+        styler._applyLoadTransitionBlender();
 
-        let filteredLink_count = styler._filterPageLeaveLinks().length;
-        let expectedLink_count = 1;
+        //trigger load event
+        $(window).trigger('load');
 
-        assert.equal(filteredLink_count,expectedLink_count);
+        await wait(1000);
 
-      });
+        let display_value = styler.blender.css('display');
+        let expected_displayValue = 'none';
 
-      it('filters out all a tags with class = "drppdown-toggle"',function() {
+        assert.equal(display_value, expected_displayValue);
 
-        let styler = new LoadStyler();
-
-        let body = $('body');
-
-        body.append($('<a href="www.google.com"></a>'));
-        body.append($('<a href="www.yahoo.com" class="dropdown-toggle"></a>'));
-        body.append($('<a href="www.facebook.com" class="dropdown-toggle"></a>'));
-
-        let filteredLink_count = styler._filterPageLeaveLinks().length;
-        let expectedLink_count = 1;
-
-        assert.equal(filteredLink_count,expectedLink_count);
 
       });
 
-      it('filters out all a-tags without href attributes', function() {
+      it.skip('displays the blender after click on pageLeaveLink', async function() {
 
-        let styler = new LoadStyler();
-
-        let body = $('body');
-
-        body.append($('<a href="www.google.com"></a>'));
-        body.append($('<a></a>'));
-        body.append($('<a></a>'));
-
-        let filteredLink_count = styler._filterPageLeaveLinks().length;
-        let expectedLink_count = 1;
-
-        assert.equal(filteredLink_count,expectedLink_count);
+        //better done in selenium webdriver!
 
       });
 
-      it('saves filtered links onto class variable', function() {
 
-        let styler = new LoadStyler();
-
-        let body = $('body');
-
-        body.append($('<a href="www.google.com"></a>'));
-        body.append($('<a></a>'));
-        body.append($('<a></a>'));
-
-        let filteredLink_count = styler._filterPageLeaveLinks().length;
-        let expectedLink_count = styler.pageLeaveLinks.length;
-
-        assert.equal(filteredLink_count,expectedLink_count);
-
-      });
 
     });
 
