@@ -453,6 +453,20 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
+    describe('_applyPreCashLoader',function() {
+
+
+        //TODO write test
+
+    });
+
+    describe('_applyPreloader',function() {
+
+        //TODO write test
+
+
+    });
+
   });
 
 
