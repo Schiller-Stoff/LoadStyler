@@ -443,6 +443,10 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
         //better done in selenium webdriver!
 
+        //because of difficulty triggering the click event in jsdom!
+
+        //TODO herausfinden wie vielleicht doch ein click event gefeuert werden kann?
+
       });
 
 
