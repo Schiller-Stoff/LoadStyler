@@ -288,7 +288,7 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
-    describe('_filtePageLeaveLinks', function() {
+    describe('_filterPageLeaveLinks', function() {
 
       it('filters out all a-tags with href smaller than 2',function() {
 
