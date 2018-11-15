@@ -230,7 +230,7 @@ class LoadStyler{
             $('body').delay(350).css({'overflow':'visible'});
         });
 
-        self.pageLeaveLinks.click(function () {
+        self.pageLeaveLinks.click(function (event) {
             event.preventDefault();
             let url = $(this).attr('href');
             self.blender.fadeIn(300, function () {
