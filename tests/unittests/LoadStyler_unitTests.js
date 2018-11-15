@@ -549,7 +549,7 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
       });
 
-      it('adds to the ajax-complete-event: hides the preloader with fadeout when triggered', function() {
+      it('adds to the ajax-complete-event: hides the preloader with fadeout when triggered', async function() {
 
         async function wait(ms) {
           return new Promise(resolve => {
@@ -568,13 +568,12 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
         $(document).trigger('ajaxComplete');
 
         //wait for the preloader to disappear
-        wait(500).then(function() {
-          let expectedDisplayVal = 'none';
-          let actualDisplayVal = styler.preloader.css('display');
-          assert.equal(expectedDisplayVal,actualDisplayVal);
-        });
+        await wait(500);
 
+        let expectedDisplayVal = 'none';
+        let actualDisplayVal = styler.preloader.css('display');
 
+        assert.equal(expectedDisplayVal,actualDisplayVal);
 
       });
 
@@ -605,7 +604,7 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
       });
 
-      it('applies to ajaxComplete event --> fade out of the ajaxLoader',function() {
+      it('applies to ajaxComplete event --> fade out of the ajaxLoader',async function() {
 
         async function wait(ms) {
           return new Promise(resolve => {
@@ -626,11 +625,11 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
         $(document).trigger('ajaxComplete');
 
-        wait(1000).then(function() {
-          let expectedDisplayVal = 'none';
-          let actualDisplayVal =  styler.ajaxloader.css('none');
-          assert.equal(expectedDisplayVal,actualDisplayVal);
-        });
+        await wait(1000);
+
+        let expectedDisplayVal = 'none';
+        let actualDisplayVal =  styler.ajaxloader.css('display');
+        assert.equal(expectedDisplayVal,actualDisplayVal);
 
 
       });
