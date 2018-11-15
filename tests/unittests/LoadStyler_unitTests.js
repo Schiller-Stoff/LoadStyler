@@ -682,13 +682,17 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
-    describe.skip('applyPageTransition',function() {
+    describe('applyPageTransition',function() {
 
-      it.skip('catches error if wrong argument was given at instantiation',function() {
-
+      it('catches error if wrong argument was given at instantiation and then called',function() {
+        let styler = new LoadStyler([]);
+        try {
+          styler.applyLoaderTransition();
+        } catch (e) {
+          if(e.search('TypeError'))assert.ok();
+          else assert.fail();
+        }
       });
-
-
     });
 
     describe('styleAjaxLoadsSimple',function() {
