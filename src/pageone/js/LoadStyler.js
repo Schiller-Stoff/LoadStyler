@@ -88,6 +88,8 @@ class LoadStyler{
 
         let self = this; //jQuery "this"-saver
 
+        if(self.preloader === undefined)self._selectPreloader();
+
         $(document).ajaxStart(function(evt) {
             console.debug("LoadStyler: Ajax start detected...");
             // blending in animation here
