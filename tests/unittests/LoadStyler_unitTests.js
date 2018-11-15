@@ -439,7 +439,7 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
       });
 
-      it('displays the blender after click on pageLeaveLink', async function() {
+      it.skip('displays the blender after click on pageLeaveLink', async function() {
 
         //small wait function
         async function wait(ms) {
@@ -527,18 +527,140 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
+    describe('styleAjaxLoadsSimple', function() {
+
+      it('adds to the ajax start-event: shows the preloader when an arbitrary ajax-load is called',function() {
+
+        let styler = new LoadStyler();
+
+        styler.styleAjaxLoadsSimple();
+
+        //first hide the preloader
+        styler.preloader.hide();
+
+        $(document).trigger('ajaxStart');
+
+        let expectedDisplayVal = 'block';
+        let actualDisplayVal = styler.preloader.css('display');
+
+        $(document).trigger('ajaxComplete');
+
+        assert.equal(expectedDisplayVal,actualDisplayVal);
+
+      });
+
+      it('adds to the ajax-complete-event: hides the preloader with fadeout when triggered', async function() {
+
+        async function wait(ms) {
+          return new Promise(resolve => {
+            setTimeout(resolve, ms);
+          });
+        }
+
+
+        let styler = new LoadStyler();
+
+        styler.styleAjaxLoadsSimple();
+
+        //first show the preloader
+        styler.preloader.show();
+
+        $(document).trigger('ajaxComplete');
+
+        //wait for the preloader to disappear
+        await wait(500);
+
+        let expectedDisplayVal = 'none';
+        let actualDisplayVal = styler.preloader.css('display');
+
+        assert.equal(expectedDisplayVal,actualDisplayVal);
+
+      });
+
+
+    });
+
+    describe.skip('styleAjaxLoads',function() {
+
+      it.skip('',function() {
+
+      });
+
+
+    });
+
   });
 
+  describe('Throws handled error as expected', function() {
+
+    describe('wrong input at instantiation',function() {
+
+      it('leads to no error', function() {
+
+        let styler = new LoadStyler([]);
+
+        // try {
+        //   styler.applyPageTransition();
+        // } catch (e) {
+        //   if(e.search('TypeError') !== -1){
+        //     assert.ok();
+        //   }
+        //
+        // }
 
 
-  describe('',function() {
 
-  });
-
-  describe('Throws error as expected', function() {
+      });
 
 
+    });
 
+    describe('applyLoaderTransition',function() {
+
+      it('catches error if wrong argument was given at instantiation',function() {
+
+        let styler = new LoadStyler([]);
+
+        try {
+          styler.applyLoaderTransition()
+        } catch (e) {
+
+          if(e.search('TypeError')!==-1){assert.ok()}
+          else throw new Error('Unhandled error detected!' + e);
+        }
+
+
+
+      });
+
+    });
+
+    describe.skip('applyPageTransition',function() {
+
+      it.skip('catches error if wrong argument was given at instantiation',function() {
+
+      });
+
+
+    });
+
+    describe.skip('styleAjaxLoadsSimple',function() {
+
+      it.skip('catches error if ajax load has failed', function() {
+
+      });
+
+    });
+
+    describe.skip('styleAjaxLoads',function() {
+
+      it.skip('catches errir if ajax load fails', function() {
+
+
+
+      });
+
+    });
 
   });
 
