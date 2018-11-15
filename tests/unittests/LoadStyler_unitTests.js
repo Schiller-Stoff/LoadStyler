@@ -580,9 +580,34 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
-    describe.skip('styleAjaxLoads',function() {
+    describe('styleAjaxLoads',function() {
 
-      it.skip('',function() {
+      it('fades in ajaxLoader after click on given element',function() {
+
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        let src_btn = body.append($('<button id="source"></button>'));
+        let trgt_div = body.append($('<div id="target"></div>'));
+
+        styler.styleAjaxLoads([{source:src_btn,target:trgt_div}]);
+
+        styler.ajaxloader.hide();
+
+        src_btn.click();
+
+        let expectedDisplayVal = 'block';
+        let actualDisplayVal =  styler.ajaxloader.css('display');
+
+        assert.equal(expectedDisplayVal,actualDisplayVal);
+
+      });
+
+      it.skip('applies to ajaxComplete event --> fade out of the ajaxLoader',function() {
+
+
+
 
       });
 
