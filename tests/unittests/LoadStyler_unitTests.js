@@ -634,7 +634,6 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
       });
 
-
     });
 
   });
@@ -692,9 +691,30 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     });
 
-    describe.skip('styleAjaxLoadsSimple',function() {
+    describe('styleAjaxLoadsSimple',function() {
 
-      it.skip('catches error if ajax load has failed', function() {
+      it('blends out preloader even when ajax fails', async function() {
+
+        async function wait(ms) {
+          return new Promise(resolve => {
+            setTimeout(resolve, ms);
+          });
+        }
+
+        let styler = new LoadStyler();
+
+        styler.styleAjaxLoadsSimple();
+
+        styler.preloader.show();
+
+        $(document).trigger('ajaxComplete');  //if jquery ajax fails it will trigger ajaxComplete!
+
+        await wait(1000);
+
+        let expectedDisplayVal = 'none';
+        let actualDisplayVal = styler.preloader.css('display');
+
+        assert(expectedDisplayVal,actualDisplayVal);
 
       });
 
