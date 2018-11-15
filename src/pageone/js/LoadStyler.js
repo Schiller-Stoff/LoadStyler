@@ -154,37 +154,6 @@ class LoadStyler{
 
     }
 
-    applyVisibleHeaderTransition(){
-        //
-        //
-        //
-
-        let self = this;
-
-
-
-    }
-
-    applyHeaderNavSlideOnload(){
-        // sets the display value of the header and nav onload to 'none' --> and display them again via
-        // animation. (
-        //
-
-        let header = $('header');
-
-        let nav = $('nav');
-
-        header.css('display','none');
-        nav.css('display','none');
-
-        nav.fadeIn(1500,'swing');
-
-        header.slideDown(600,'swing');
-
-
-
-    }
-
     _applyPreLoader(){
 
         // 'this'- container, because of jQuery -- polluted namespace
