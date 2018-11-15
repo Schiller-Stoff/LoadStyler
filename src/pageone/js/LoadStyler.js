@@ -91,14 +91,12 @@ class LoadStyler{
         if(self.preloader === undefined)self._selectPreloader();
 
         $(document).ajaxStart(function(evt) {
-            console.debug("LoadStyler: Ajax start detected...");
             // blending in animation here
             self.preloader.fadeIn();
 
         });
 
         $(document).ajaxComplete(function( event, xhr, settings ) {
-            console.debug("LoadStyler: Ajax stop detected...");
             // blending out animation here
             self.preloader.fadeOut();
         });
