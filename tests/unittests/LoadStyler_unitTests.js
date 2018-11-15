@@ -439,13 +439,33 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
       });
 
-      it.skip('displays the blender after click on pageLeaveLink', async function() {
+      it('displays the blender after click on pageLeaveLink', async function() {
 
-        //better done in selenium webdriver!
+        //small wait function
+        async function wait(ms) {
+          return new Promise(resolve => {
+            setTimeout(resolve, ms);
+          });
+        }
 
-        //because of difficulty triggering the click event in jsdom!
+        $('body').append($('<a href="https://google.com"></a>'));
 
-        //TODO herausfinden wie vielleicht doch ein click event gefeuert werden kann?
+        let styler = new LoadStyler();
+
+        //call function
+        styler._applyLoadTransitionBlender();
+
+        $(window).trigger('load'); //load event hides the blender
+
+        await wait(1000);
+
+        $('a').click();      //need to give jquery the event data????
+
+        let actualDisplayVal = $('#LoadStyler_Blender').css('display');
+        let expDisplayVal = 'block';
+
+        assert.equal(actualDisplayVal, expDisplayVal);
+
 
       });
 
@@ -455,15 +475,55 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
     describe('_applyPreCashLoader',function() {
 
+      it('supplies an click event on links that fades in the preCashLoader afterwards',function() {
 
-        //TODO write test
+        $('body').append($('<a href="https://google.com"></a>'));
+
+        let styler = new LoadStyler();
+
+        styler._applyPreCashLoader();
+
+        //hides the loader --> because no css applied = visible!
+        styler.preCacheLoader.hide();
+
+        $('a').click();
+
+        let expDisplayVal = 'block';
+        let actualDisplayVal = styler.preCacheLoader.css('display');
+
+        assert.equal(expDisplayVal,actualDisplayVal);
+
+      });
 
     });
 
     describe('_applyPreloader',function() {
 
-        //TODO write test
+      it('applies to the window onload event --> fadeOut of the preloader with animation',async function() {
 
+        async function wait(ms) {
+          return new Promise(resolve => {
+            setTimeout(resolve, ms);
+          });
+        }
+
+
+        //$('body').append($('<a href="https://google.com"></a>'));
+
+        let styler = new LoadStyler();
+
+        styler._applyPreLoader();
+
+        $(window).trigger('load');
+
+        await wait(1000);
+
+        let expDisplayVal = 'none';
+        let actualDisplayVal = styler.preloader.css('display');
+
+        assert.equal(expDisplayVal,actualDisplayVal);
+
+      });
 
     });
 
