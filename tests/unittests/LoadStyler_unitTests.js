@@ -549,7 +549,7 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
       });
 
-      it('adds to the ajax-complete-event: hides the preloader with fadeout when triggered', async function() {
+      it('adds to the ajax-complete-event: hides the preloader with fadeout when triggered', function() {
 
         async function wait(ms) {
           return new Promise(resolve => {
@@ -568,12 +568,13 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
         $(document).trigger('ajaxComplete');
 
         //wait for the preloader to disappear
-        await wait(500);
+        wait(500).then(function() {
+          let expectedDisplayVal = 'none';
+          let actualDisplayVal = styler.preloader.css('display');
+          assert.equal(expectedDisplayVal,actualDisplayVal);
+        });
 
-        let expectedDisplayVal = 'none';
-        let actualDisplayVal = styler.preloader.css('display');
 
-        assert.equal(expectedDisplayVal,actualDisplayVal);
 
       });
 
@@ -604,9 +605,32 @@ describe('Basic Mocha Tests for the LoadStyler', function() {
 
       });
 
-      it.skip('applies to ajaxComplete event --> fade out of the ajaxLoader',function() {
+      it('applies to ajaxComplete event --> fade out of the ajaxLoader',function() {
 
+        async function wait(ms) {
+          return new Promise(resolve => {
+            setTimeout(resolve, ms);
+          });
+        }
 
+        let styler = new LoadStyler();
+
+        let body = $('body');
+
+        let src_btn = body.append($('<button id="source"></button>'));
+        let trgt_div = body.append($('<div id="target"></div>'));
+
+        styler.styleAjaxLoads([{source:src_btn,target:trgt_div}]);
+
+        styler.ajaxloader.show();
+
+        $(document).trigger('ajaxComplete');
+
+        wait(1000).then(function() {
+          let expectedDisplayVal = 'none';
+          let actualDisplayVal =  styler.ajaxloader.css('none');
+          assert.equal(expectedDisplayVal,actualDisplayVal);
+        });
 
 
       });
