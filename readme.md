@@ -9,6 +9,7 @@
 example Usage:
 
 `const styler = new LoadStyler();`
+
 `styler.applyPageTransition();`
 
 
