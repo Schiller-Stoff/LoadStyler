@@ -8,8 +8,8 @@
 
 example Usage:
 
-`const styler = new LoadStyler() \n;
-styler.applyPageTransition();`
+`const styler = new LoadStyler();`
+`styler.applyPageTransition();`
 
 
 
