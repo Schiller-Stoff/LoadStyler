@@ -8,9 +8,9 @@
 
 example Usage:
 
-`const styler = new LoadStyler();`
+`const styler = new LoadStyler();
 
-`styler.applyPageTransition();`
+styler.applyPageTransition();`
 
 
 
