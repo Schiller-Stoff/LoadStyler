@@ -5,7 +5,10 @@
 
 ## How to use
 
-first add the required script and link-tag to your page:
+
+-Use LoadSytler.js and LoadStyler.css
+
+then add the required script and link-tag to your page:
 
 ```
 <link rel="stylesheet" href="css/LoadStyler.css">
