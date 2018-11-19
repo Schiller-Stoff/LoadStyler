@@ -6,7 +6,7 @@
 ## How to use
 
 
--Use LoadSytler.js and LoadStyler.css
+-Use LoadStyler.js and LoadStyler.css
 
 then add the required script and link-tag to your page:
 
@@ -53,7 +53,7 @@ styler.applyPageTransition();
 ### Applying specific links for the page-transition
 
 
-Add instantiation declare the links which should call the transition effect
+At instantiation declare the links which should call the transition effect
 
 ```
 let links = $('nav a')
@@ -64,7 +64,7 @@ const styler = new LoadStyler(links);       //pagetransition only applied to <a>
 
 ## Customization
 
-mainly via css
+mainly via css in LoadStyler.css
 
 
 ## Additional:
