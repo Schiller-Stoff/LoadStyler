@@ -57,7 +57,7 @@ At instantiation declare the links which should call the transition effect
 
 ```
 let links = $('nav a')
-const styler = new LoadStyler(links);       //pagetransition only applied to <a>'s in the navigation
+var styler = new LoadStyler(links);       //pagetransition only applied to <a>'s in the navigation
 
 ```
 
