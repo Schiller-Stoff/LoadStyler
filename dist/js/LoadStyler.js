@@ -1,434 +1,163 @@
+"use strict";
 
-class LoadStyler{
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  constructor(toStyleLinks){
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-    // will only be assigned if needed (when _applyPreLoader is called - for ex. over applyLoaderTransition or applyPageTransition)
-    this.preloader = undefined;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    // will only be assigned if needed (when applayLoadTransitionBlender is called)
-    this.blender = undefined;
+!function (e) {
+  var o = {};function t(r) {
+    if (o[r]) return o[r].exports;var n = o[r] = { i: r, l: !1, exports: {} };return e[r].call(n.exports, n, n.exports, t), n.l = !0, n.exports;
+  }t.m = e, t.c = o, t.d = function (e, o, r) {
+    t.o(e, o) || Object.defineProperty(e, o, { enumerable: !0, get: r });
+  }, t.r = function (e) {
+    "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 });
+  }, t.t = function (e, o) {
+    if (1 & o && (e = t(e)), 8 & o) return e;if (4 & o && "object" == (typeof e === "undefined" ? "undefined" : _typeof(e)) && e && e.__esModule) return e;var r = Object.create(null);if (t.r(r), Object.defineProperty(r, "default", { enumerable: !0, value: e }), 2 & o && "string" != typeof e) for (var n in e) {
+      t.d(r, n, function (o) {
+        return e[o];
+      }.bind(null, n));
+    }return r;
+  }, t.n = function (e) {
+    var o = e && e.__esModule ? function () {
+      return e.default;
+    } : function () {
+      return e;
+    };return t.d(o, "a", o), o;
+  }, t.o = function (e, o) {
+    return Object.prototype.hasOwnProperty.call(e, o);
+  }, t.p = "", t(t.s = 0);
+}([function (e, o, t) {
+  "use strict";
+  t.r(o);t(3), t(1), t(2);
+}, function (e, o) {
+  e.exports = function () {
+    function _class(e) {
+      _classCallCheck(this, _class);
 
-    // will only be assigned if needed (when styleAjaxLoads is called)
-    this.ajaxloader = undefined;
+      this.preloader = void 0, this.blender = void 0, this.ajaxloader = void 0, this.preCacheLoader = void 0, this.pageLeaveLinks = this._retrievePageLinks(e);
+    }
 
-    // will only be assigned if needed
-    this.preCacheLoader = undefined;
-
-    // select and remember selected pageLeave <a>
-    this.pageLeaveLinks = this._retrievePageLinks(toStyleLinks);
-
-  }
-
-  applyLoaderTransition(){
-    //Loading of page (precash and preload) will be indicated by a loader;
-    //no full stack page transition -- will only display the animated loader.
-    //function calls _applyPreLoader() and _applyPreCashLoader()
-
-    try {
-      this._applyPreLoader();
-      this._applyPreCashLoader();
-
-
-    } catch (e) {
-      console.warn(
-        'LoaderTransition could not be applied.\nFollowing error was thrown inside the class: '
-      );
-      console.error(e);
-      try {
-        console.warn('The LoadStyler tries to suppress possible-added hardcoded/static html items now...');
-        $('#LoadStyler_Preloader').css('display','none');
-        $('#LoadStyler_PrecacheLoader').css('display','none');
-        console.warn('success!');
-      } catch (e) {
-        console.warn('Hiding the html hardcoded LoadStyler-Elements failed!')
+    _createClass(_class, [{
+      key: "applyLoaderTransition",
+      value: function applyLoaderTransition() {
+        try {
+          this._applyPreLoader(), this._applyPreCashLoader();
+        } catch (e) {
+          console.warn("LoaderTransition could not be applied.\nFollowing error was thrown inside the class: "), console.error(e);try {
+            console.warn("The LoadStyler tries to suppress possible-added hardcoded/static html items now..."), $("#LoadStyler_Preloader").css("display", "none"), $("#LoadStyler_PrecacheLoader").css("display", "none"), console.warn("success!");
+          } catch (e) {
+            console.warn("Hiding the html hardcoded LoadStyler-Elements failed!");
+          }
+        }
       }
-    }
-  }
-
-  applyPageTransition(){
-    // adds a full page transition to the page
-    // calls applyLoaderTransition (for the css animated loader)  and _applyLoadTransitionBlender
-    // for the background-fading effect.
-
-    try {
-      this.applyLoaderTransition();
-      this._applyLoadTransitionBlender();
-
-      //error-handling
-    } catch (e) {
-      console.warn(
-        'PageTransition could not be applied.\nFollowing error was thrown inside the class: '
-      );
-      console.error(e);
-      //hides the blender in case of error;
-      try {
-        console.warn('The LoadStyler tries to suppress possible-added hardcoded/static html items now...');
-        $('#LoadStyler_Blender').css('display','none');
-        $('#LoadStyler_Preloader').css('display','none');
-        $('#LoadStyler_PrecacheLoader').css('display','none');
-        console.warn('success!');
-      } catch (e) {
-        console.warn('Hiding the html hardcoded LoadStyler-Elements failed!')
+    }, {
+      key: "applyPageTransition",
+      value: function applyPageTransition() {
+        try {
+          this.applyLoaderTransition(), this._applyLoadTransitionBlender();
+        } catch (e) {
+          console.warn("PageTransition could not be applied.\nFollowing error was thrown inside the class: "), console.error(e);try {
+            console.warn("The LoadStyler tries to suppress possible-added hardcoded/static html items now..."), $("#LoadStyler_Blender").css("display", "none"), $("#LoadStyler_Preloader").css("display", "none"), $("#LoadStyler_PrecacheLoader").css("display", "none"), console.warn("success!");
+          } catch (e) {
+            console.warn("Hiding the html hardcoded LoadStyler-Elements failed!");
+          }
+        }
       }
-
-    }
-  }
-
-  styleAjaxLoadsSimple(){
-    // Method uses the preloader to indicate the loading time
-    // blends it in, in the centre of page
-    // will style all ajax loads -- with the same style,
-
-    let self = this; //jQuery "this"-saver
-
-    if(self.preloader === undefined)self._selectPreloader();
-
-    $(document).ajaxStart(function(evt) {
-      // blending in animation here
-      self.preloader.fadeIn();
-
-    });
-
-    $(document).ajaxComplete(function( event, xhr, settings ) {
-      // blending out animation here
-      self.preloader.fadeOut();
-    });
-  }
-
-  styleAjaxLoads(objectArray){
-    // awaits an array of objects as input: The objects must have the two properties 'source' and 'target'
-    // source should define the source of the ajax - activaion for example the buttons --> elements with the assigned click event
-    // target should define the parent container-element to where the ajax-container element should be loaded!
-    // function applies an click-event listener to the source elements --> appends ajaxLoader to the end
-    // of the target-parent and blends in the ajaxLoader as long as the ajax loads takes.
-    // the relative position of the ajaxLoader is handled by the CSS.
-
-    //Debug Info
-    console.info("\n\n------ styleAjaxLoads()-----");
-    console.info('The given parameter is:');
-    console.info(objectArray);
-    //
-
-    let self = this;    //jquery saver
-
-    try {
-      self._selectAjaxLoader();
-      objectArray.forEach(function(obj) {
-        // Error Handling
-        if (obj.target.length === 0) return console.log('There is no Element in your target selection: ' + obj.target);
-        if (obj.source.length === 0) return console.log('There is no Element in your source selection: ' + obj.source);
-        //
-
-        obj.target.css({ position: 'relative' });                  // makes sure that the parent container of the element is set to relative!
-
-
-        //obj.source = self._validateSelection(obj.source);       // this is necessary because of ajax --> jquery can't select a not existing elem, here it will select it if not already!
-
-        obj.source.click(function() {
-
-          console.info('\n\nClick event test');
-
-          obj.target.append(self.ajaxloader);
-          self.ajaxloader.fadeIn();
-
-        });
-      });
-    } catch (e) {
-      console.warn('Something went wrong inside styleAjaxLoads. Ajax Style will not be applied. The error is: ');
-      console.error(e);
-      return;
-    }
-
-    $(document).ajaxComplete(function () {
-      console.debug("LoadStyler: Ajax stop detected...");
-      // blending out animation here
-      self.ajaxloader.fadeOut();
-    })
-
-  }
-
-  _applyPreLoader(){
-
-    // 'this'- container, because of jQuery -- polluted namespace
-    // avoids conflicts
-    let self = this;
-
-    this._selectPreloader();
-
-    // On load
-    $(window).on('load', function() { // makes sure the whole site is loaded
-      self.preloader.delay(350).fadeOut('slow');            //TODO make sure that it is fade out!
-      $('body').delay(350).css({'overflow':'visible'});
-    });
-  }
-
-  _applyPreCashLoader(){
-    // controls the animation and visibility of the PreCashLoader in the DOM
-    // animations via jquery .fadeIn()
-    // calls function _selectPrecacheLoader.
-
-    let self = this;
-
-    this._selectPrecacheLoader();
-
-    this.pageLeaveLinks.click(function () {
-      self.preCacheLoader.fadeIn();
-    });
-
-  }
-
-  _applyLoadTransitionBlender(){
-    // applies a black blender to the loading transition
-    // prevents default of the a - elements in the nav!
-
-    let self = this;
-
-    this._selectBlender();
-
-    self.blender.show();
-
-    $(window).on('load', function() { // makes sure the whole site is loaded
-      self.blender.delay(350).fadeOut('slow');            //TODO need to test here if blender is really blend out! - same is true for the loader/spinner!
-      $('body').delay(350).css({'overflow':'visible'});
-    });
-
-    self.pageLeaveLinks.click(function (event) {
-      event.preventDefault();
-      let url = $(this).attr('href');
-      self.blender.fadeIn(300, function () {
-        document.location.href = url;
-      });
-      return false;
-    });
-
-  }
-
-  _selectPreloader(){
-    // Checks if there is an element with the id 'LoadStyler_Preloader' in the DOM.
-    // If yes it will return the selection, if not it will return the generated div
-    // with the required id.
-    // Further checks if position / zIndex for the element is at standard value --> if not applies custom css via jquery!
-
-    let self = this;
-
-    let preloaderCatcher = $('#LoadStyler_Preloader');
-
-    // Check if there's already the preloader in the DOM.
-    if(preloaderCatcher.length > 0){
-
-      return self.preloader = preloaderCatcher;
-
-    } else {
-
-      let preloader = $('<div id="LoadStyler_Preloader"></div>');
-
-      $('body').prepend(preloader);
-
-      // apply custom styling if no css is applied
-      if((preloader.css('z-index')=== 'auto')&&(preloader.css('position')!== 'fixed')){
-
-        preloader.css({
-          border: '16px solid #f3f3f3',
-          borderRadius: '50%',
-          borderTop: '16px solid #3498db',
-          width: '120px',
-          height: '120px',
-          '-webkit-animation': 'spin 2s linear infinite',
-          animation: 'spin 2s linear infinite',
-          position: 'fixed',
-          margin: 'auto',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          zIndex: 101
+    }, {
+      key: "styleAjaxLoadsSimple",
+      value: function styleAjaxLoadsSimple() {
+        var e = this;void 0 === e.preloader && e._selectPreloader(), $(document).ajaxStart(function (o) {
+          e.preloader.fadeIn();
+        }), $(document).ajaxComplete(function (o, t, r) {
+          e.preloader.fadeOut();
         });
       }
-
-      return self.preloader = preloader;
-
-
-    }
-
-  }
-
-  _selectBlender(){
-    // Checks if there is an element with the id #LoadStyler_Blender in the DOM.
-    // If yes it will return the selection, if not it will return the generated div
-    // with the required id.
-    // Further checks if position / zIndex for the element is at standard value --> if not applies custom css via jquery!
-
-    let self = this;
-
-    let blender = $('#LoadStyler_Blender');
-
-    if(blender.length > 0){
-      return self.blender = blender;
-    } else {
-
-      blender = $('<div id="LoadStyler_Blender"></div>');
-
-      $('body').prepend(blender);
-
-      if((blender.css('z-index')=== 'auto')&&(blender.css('position')!== 'fixed')){
-
-        blender.css({
-          position: 'fixed',      // blender wird immer mitgenommen!
-          zIndex: 100,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'black',
-          opacity: 1,
-          display:'none'
+    }, {
+      key: "styleAjaxLoads",
+      value: function styleAjaxLoads(e) {
+        console.info("\n\n------ styleAjaxLoads()-----"), console.info("The given parameter is:"), console.info(e);var o = this;try {
+          o._selectAjaxLoader(), e.forEach(function (e) {
+            return 0 === e.target.length ? console.log("There is no Element in your target selection: " + e.target) : 0 === e.source.length ? console.log("There is no Element in your source selection: " + e.source) : (e.target.css({ position: "relative" }), void e.source.click(function () {
+              console.info("\n\nClick event test"), e.target.append(o.ajaxloader), o.ajaxloader.fadeIn();
+            }));
+          });
+        } catch (e) {
+          return console.warn("Something went wrong inside styleAjaxLoads. Ajax Style will not be applied. The error is: "), void console.error(e);
+        }$(document).ajaxComplete(function () {
+          console.debug("LoadStyler: Ajax stop detected..."), o.ajaxloader.fadeOut();
         });
       }
-      return self.blender = blender;
-    }
-  }
-
-  _selectAjaxLoader(){
-    // Checks if there is an element with the id #LoadStyler_AjaxLoader in the DOM.
-    // If yes it will return the selection, if not it will return the generated div
-    // with the required id.
-    //  checks if zIndex for the element is at standard value --> if not applies custom css via jquery!
-
-    let self = this;
-
-    let ajaxLoader = $('#LoadStyler_AjaxLoader');
-
-    if(ajaxLoader.length > 0){
-
-      return self.ajaxloader = ajaxLoader;
-
-    } else {
-
-      ajaxLoader = $('<div id="LoadStyler_AjaxLoader"></div>');
-
-      $('body').prepend(ajaxLoader);
-
-      if((ajaxLoader.css('z-index')=== 'auto')){
-
-        ajaxLoader.css({
-          border: '8px solid #f3f3f3',
-          borderRadius: '50%',
-          borderTop: '8px solid #3498db',
-          width: '60px',
-          height: '60px',
-          '-webkit-animation': 'spin 2s linear infinite',
-          animation: 'spin 2s linear infinite',
-          position: 'absolute',
-          margin: 'auto',
-          top: '45%',
-          left: '45%',
-          zIndex: 101,
-          display: 'none'
-        });
-
-
-      }
-
-      return self.ajaxloader = ajaxLoader;
-    }
-
-  }
-
-  _selectPrecacheLoader(){
-    // Checks if there is an element with the id #LoadStyler_PrecacheLoader in the DOM.
-    // If yes it will return the selection, if not it will return the generated div
-    // with the required id.
-    // Further checks if position / zIndex for the element is at standard value --> if not applies custom css via jquery!
-
-    let self = this;
-
-    let preCacheLoader = $('#LoadStyler_PrecacheLoader');
-
-    // Check if there's already the preloaderCatcher in the DOM.
-    if(preCacheLoader.length > 0){
-
-      return self.preCacheLoader = preCacheLoader;
-
-    } else {
-
-      preCacheLoader = $('<div id="LoadStyler_PrecacheLoader"></div>');
-
-      $('body').prepend(preCacheLoader);
-
-      if((preCacheLoader.css('z-index')=== 'auto')&&(preCacheLoader.css('position')!== 'fixed')){
-
-        preCacheLoader.css({
-          border: '16px solid #f3f3f3',
-          borderRadius: '50%',
-          borderTop: '16px solid #3498db',
-          width: '120px',
-          height: '120px',
-          '-webkit-animation': 'spin 2s linear infinite',
-          animation: 'spin 2s linear infinite',
-          position: 'fixed',
-          margin: 'auto',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          zIndex: 101
+    }, {
+      key: "_applyPreLoader",
+      value: function _applyPreLoader() {
+        var e = this;this._selectPreloader(), $(window).on("load", function () {
+          e.preloader.delay(350).fadeOut("slow"), $("body").delay(350).css({ overflow: "visible" });
         });
       }
-
-      return self.preCacheLoader = preCacheLoader;
-
-    }
-
-  }
-
-  _retrievePageLinks(toStyleLinks){
-    // If links were given to the constructor this will just return these links. Otherwise
-    // it calls as custom operation the _filterPageLeaveLinks() method -- to filter intern links
-    // from these that lead to different domains / pages etc.
-
-    if (toStyleLinks === undefined){
-      try {
-        //console.log($('#testbutton01').attr('href').length);  //test error
-        return this._filterPageLeaveLinks();
-
-        //error handling from here
-      } catch (e) {
-        console.warn(
-          e.name +
-          ': There was an error at the custom filtering for pageLeave links, instead returning an empty array --> will cause an error. ' +
-          'No pagetransition on leave applied. Consider giving the specific links to the constructor.'
-        );
-        return [];
+    }, {
+      key: "_applyPreCashLoader",
+      value: function _applyPreCashLoader() {
+        var e = this;this._selectPrecacheLoader(), this.pageLeaveLinks.click(function () {
+          e.preCacheLoader.fadeIn();
+        });
       }
-    } else {
-      return toStyleLinks;
-    }
-
-
-  }
-
-  _filterPageLeaveLinks(){
-    // tries to return the <a> tags that lead to pageLeave, filter
-    // out for ex. dropdowns
-    // checks for bootstrap typical classes like .dropdown and .dropdown-toggle
-    // and Checks href-attribute has value longer then 1 and that no '#' is included --> and filters out
-
-    let self = this;
-
-    let pageLeaveAs = $('a').not($('.dropdown')).not($('.dropdown-toggle')).not(function () {
-
-      // catches error if attr is not defined
-      if($(this).attr('href')===undefined)return true;
-
-      // when return = true then it is filtered out!
-      if($(this).attr('href').length < 2 || ($(this).attr('href').indexOf('#') !== -1)){
-        return true
-      } else {
-        return false
+    }, {
+      key: "_applyLoadTransitionBlender",
+      value: function _applyLoadTransitionBlender() {
+        var e = this;this._selectBlender(), e.blender.show(), $(window).on("load", function () {
+          e.blender.delay(350).fadeOut("slow"), $("body").delay(350).css({ overflow: "visible" });
+        }), e.pageLeaveLinks.click(function (o) {
+          o.preventDefault();var t = $(this).attr("href");return e.blender.fadeIn(300, function () {
+            document.location.href = t;
+          }), !1;
+        });
       }
-    });
+    }, {
+      key: "_selectPreloader",
+      value: function _selectPreloader() {
+        var e = this,
+          o = $("#LoadStyler_Preloader");if (o.length > 0) return e.preloader = o;{
+          var _o = $('<div id="LoadStyler_Preloader"></div>');return $("body").prepend(_o), "auto" === _o.css("z-index") && "fixed" !== _o.css("position") && _o.css({ border: "16px solid #f3f3f3", borderRadius: "50%", borderTop: "16px solid #3498db", width: "120px", height: "120px", "-webkit-animation": "spin 2s linear infinite", animation: "spin 2s linear infinite", position: "fixed", margin: "auto", top: 0, right: 0, bottom: 0, left: 0, zIndex: 101 }), e.preloader = _o;
+        }
+      }
+    }, {
+      key: "_selectBlender",
+      value: function _selectBlender() {
+        var e = this,
+          o = $("#LoadStyler_Blender");return o.length > 0 ? e.blender = o : (o = $('<div id="LoadStyler_Blender"></div>'), $("body").prepend(o), "auto" === o.css("z-index") && "fixed" !== o.css("position") && o.css({ position: "fixed", zIndex: 100, width: "100%", height: "100%", backgroundColor: "black", opacity: 1, display: "none" }), e.blender = o);
+      }
+    }, {
+      key: "_selectAjaxLoader",
+      value: function _selectAjaxLoader() {
+        var e = this,
+          o = $("#LoadStyler_AjaxLoader");return o.length > 0 ? e.ajaxloader = o : (o = $('<div id="LoadStyler_AjaxLoader"></div>'), $("body").prepend(o), "auto" === o.css("z-index") && o.css({ border: "8px solid #f3f3f3", borderRadius: "50%", borderTop: "8px solid #3498db", width: "60px", height: "60px", "-webkit-animation": "spin 2s linear infinite", animation: "spin 2s linear infinite", position: "absolute", margin: "auto", top: "45%", left: "45%", zIndex: 101, display: "none" }), e.ajaxloader = o);
+      }
+    }, {
+      key: "_selectPrecacheLoader",
+      value: function _selectPrecacheLoader() {
+        var e = this,
+          o = $("#LoadStyler_PrecacheLoader");return o.length > 0 ? e.preCacheLoader = o : (o = $('<div id="LoadStyler_PrecacheLoader"></div>'), $("body").prepend(o), "auto" === o.css("z-index") && "fixed" !== o.css("position") && o.css({ border: "16px solid #f3f3f3", borderRadius: "50%", borderTop: "16px solid #3498db", width: "120px", height: "120px", "-webkit-animation": "spin 2s linear infinite", animation: "spin 2s linear infinite", position: "fixed", margin: "auto", top: 0, right: 0, bottom: 0, left: 0, zIndex: 101 }), e.preCacheLoader = o);
+      }
+    }, {
+      key: "_retrievePageLinks",
+      value: function _retrievePageLinks(e) {
+        if (void 0 !== e) return e;try {
+          return this._filterPageLeaveLinks();
+        } catch (e) {
+          return console.warn(e.name + ": There was an error at the custom filtering for pageLeave links, instead returning an empty array --\x3e will cause an error. No pagetransition on leave applied. Consider giving the specific links to the constructor."), [];
+        }
+      }
+    }, {
+      key: "_filterPageLeaveLinks",
+      value: function _filterPageLeaveLinks() {
+        var e = $("a").not($(".dropdown")).not($(".dropdown-toggle")).not(function () {
+          return void 0 === $(this).attr("href") || $(this).attr("href").length < 2 || -1 !== $(this).attr("href").indexOf("#");
+        });return this.pageLeaveLinks = e;
+      }
+    }]);
 
-    return self.pageLeaveLinks = pageLeaveAs;
-
-  }
-
-}
+    return _class;
+  }();
+}, function (e, o) {}, function (e, o) {}]);
