@@ -20,7 +20,7 @@ then use the class in following scripts
 
 ### Straight Usage
 
-example Usage in exampleCalls.js:
+e.g. in exampleCalls.js:
 
 ```
 const styler = new LoadStyler();
@@ -52,11 +52,11 @@ styler.applyPageTransition();
 
 Add instantiation declare the links which should call the transition effect
 
-´´´
+```
 let links = $('nav a')
 const styler = new LoadStyler(links);       //pagetransition only applied to <a>'s in the navigation
 
-´´´
+```
 
 
 ## Customization
