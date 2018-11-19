@@ -1,5 +1,20 @@
 
 
+# LoadStyler
+
+
+## How to use
+
+
+example Usage:
+
+`const styler = new LoadStyler();
+styler.applyPageTransition();`
+
+
+
+## Do Not
+
 don't run with npm dev!
 
 USE npm run build!
