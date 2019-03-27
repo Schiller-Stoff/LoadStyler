@@ -439,5 +439,7 @@ class LoadStyler{
 
 }
 
+window.LoadStyler = LoadStyler;
+
 //export for node
 module.exports = LoadStyler;
