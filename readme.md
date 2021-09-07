@@ -2,6 +2,13 @@
 
 # LoadStyler
 
+JQuery based class to simplify the indication of loading processes on web-frontends like waiting for request - responses etc.
+
+
+## Demos and Examples
+- [Cantus Page transition effect](https://gams.uni-graz.at/context:cantus)
+- [at different GAMS projects](http://gams.uni-graz.at/)
+
 
 ## How to use
 
